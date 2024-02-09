@@ -10,7 +10,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Ingrediente2 {
+public class IngredienteDelPlato {
     Ingrediente ingrediente;
     Double peso;
 }

@@ -1,2 +1,11 @@
-package org.calculadoracalorias.repository;public interface IIngredientesRepository {
+package org.calculadoracalorias.repository;
+
+import org.calculadoracalorias.entity.Ingrediente;
+
+import java.util.List;
+
+public interface IIngredientesRepository {
+    public List<Ingrediente> getAll();
+
+    public Ingrediente getByName(String nombre);
 }
