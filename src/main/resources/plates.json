@@ -1,0 +1,37 @@
+[
+  {
+    "nombre": "Ensalada Mediterránea",
+    "ingredientes": [
+      {"ingrediente": "Aceitunas negras", "peso": 50},
+      {"ingrediente": "Tomates", "peso": 100},
+      {"ingrediente": "Cebolla", "peso": 30},
+      {"ingrediente": "Pepino", "peso": 50},
+      {"ingrediente": "Aceite de oliva", "peso": 20},
+      {"ingrediente": "Vinagres", "peso": 5},
+      {"ingrediente": "Sal", "peso": 5}
+    ]
+  },
+  {
+    "nombre": "Tarta de Frutas",
+    "ingredientes": [
+      {"ingrediente": "Fresas", "peso": 80},
+      {"ingrediente": "Kiwi", "peso": 50},
+      {"ingrediente": "Mango", "peso": 70},
+      {"ingrediente": "Piña", "peso": 60},
+      {"ingrediente": "Uva", "peso": 40},
+      {"ingrediente": "Miel", "peso": 30}
+    ]
+  },
+  {
+    "nombre": "Pasta Primavera",
+    "ingredientes": [
+      {"ingrediente": "Pasta de sémola", "peso": 150},
+      {"ingrediente": "Tomate triturado en conserva", "peso": 80},
+      {"ingrediente": "Cebolla tierna", "peso": 40},
+      {"ingrediente": "Calabacín", "peso": 60},
+      {"ingrediente": "Pimiento", "peso": 30},
+      {"ingrediente": "Aceite de oliva", "peso": 15},
+      {"ingrediente": "Sal", "peso": 5}
+    ]
+  }
+]

@@ -1,12 +1,12 @@
 package org.calculadoracalorias.service;
 
-import org.calculadoracalorias.dto.response.IngredienteResponseDTO;
-import org.calculadoracalorias.dto.response.PlatoResponseDTO;
+import org.calculadoracalorias.dto.request.PlatoReqDTO;
+import org.calculadoracalorias.dto.response.IngredienteDePlatoDTO;
+import org.calculadoracalorias.dto.response.PlatoResDTO;
 import org.calculadoracalorias.entity.Ingrediente;
-import org.calculadoracalorias.entity.IngredienteDelPlato;
 import org.calculadoracalorias.entity.Plato;
-import org.calculadoracalorias.entity.Receta;
-import org.calculadoracalorias.repository.IngredientesRepositoryImpl;
+import org.calculadoracalorias.repository.IngredientesRepositoryImp;
+import org.calculadoracalorias.repository.PlatosRepositoryImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,40 +16,77 @@ import java.util.List;
 @Service
 public class MenuService {
     @Autowired
-    IngredientesRepositoryImpl repo;
+    IngredientesRepositoryImp repoIngr;
+    @Autowired
+    PlatosRepositoryImp repoPlatos;
 
-    Receta pizza = new Receta("Pizza", List.of(
-            new IngredienteDelPlato(repo.getByName("Harina de Trigo Refinada"), 200.0),
-            new IngredienteDelPlato(repo.getByName("Salsa de Tomate en Conserva"), 100.0),
-            new IngredienteDelPlato(repo.getByName("Queso crema"), 150.0)
-    ));
+    //Plato pizza = new Plato("Pizza", List.of(
+    //        new IngredienteDelPlato(repo.getByName("Harina de Trigo Refinada"), 200.0),
+    //        new IngredienteDelPlato(repo.getByName("Salsa de Tomate en Conserva"), 100.0),
+    //        new IngredienteDelPlato(repo.getByName("Queso crema"), 150.0)
+    //));
 
     public List<Ingrediente> getAllIngredientes() {
-        return repo.getAll();
+        return repoIngr.getAll();
     }
 
-    public List<Ingrediente> getReceta(Plato p) {
-        Double totalCals = 0.0;
-        PlatoResponseDTO resDTO = new PlatoResponseDTO();
+    public List<PlatoResDTO> getAllPlatos() {
+        List<PlatoResDTO> res = new ArrayList<>();
 
-        if (p.getNombre().equalsIgnoreCase("Pizza")){
-            for (IngredienteDelPlato i : pizza.getIngredientes()) {
-                resDTO.getIngredientes().add(new IngredienteResponseDTO(i.getIngrediente(),
-                        i.getIngrediente().getCalories() * 0.01 * i.getPeso(),
-                        i.getPeso()));
+        repoPlatos.getAll().forEach(p -> {
+            List<IngredienteDePlatoDTO> ingredientes = new ArrayList<>();
+            String nombre = p.getNombre();
+            Double peso = p.getPeso();
+
+            fillIngredienteDePlatoDTOList(p, ingredientes);
+
+            res.add(new PlatoResDTO(nombre, peso, ingredientes));
+        });
+
+        return res;
+    }
+
+    private void fillIngredienteDePlatoDTOList(Plato p, List<IngredienteDePlatoDTO> ingredientes) {
+        p.getIngredientes().forEach((ingrName, cantEnGramos) -> {
+            Ingrediente ingr = repoIngr.getByName(ingrName);
+            if (ingr != null) {
+                Double cals = (ingr.getCalories() * cantEnGramos) * 0.01;
+                ingredientes.add(new IngredienteDePlatoDTO(ingrName, cantEnGramos, cals));
+            } else {
+                ingredientes.add(new IngredienteDePlatoDTO(ingrName, cantEnGramos, null));
             }
+        });
+    }
+
+    public List<IngredienteDePlatoDTO> getReceta(PlatoReqDTO p) {
+        List<IngredienteDePlatoDTO> resDTO = new ArrayList<>();
+        String nombrePlato = p.getNombre();
+        Plato plato = repoPlatos.getByName(nombrePlato);
+
+        if (plato != null) {
+            fillIngredienteDePlatoDTOList(plato, resDTO);
         }
-        totalCals = resDTO.getIngredientes().stream()
-                .mapToDouble(IngredienteResponseDTO::getCalorias)
-                .sum();
 
-        resDTO.setIngredienteMasCalorico(
-                resDTO.getIngredientes().stream().max(IngredienteResponseDTO::getCalorias);
-        );
-        resDTO.setTotalCalories(totalCals);
+        return resDTO;
+        //Double totalCals = 0.0;
 
-        return ;
+        //if (p.getNombre().equalsIgnoreCase("Pizza")){
+        //    for (IngredienteDelPlato i : pizza.getIngredientes()) {
+        //        resDTO.getIngredientes().add(new IngredienteDTO(i.getIngrediente(),
+        //                i.getIngrediente().getCalories() * 0.01 * i.getPeso(),
+        //                i.getPeso()));
+        //    }
+        //}
+        //totalCals = resDTO.getIngredientes().stream()
+        //        .mapToDouble(IngredienteDTO::getCalorias)
+        //        .sum();
 
+        //resDTO.setIngredienteMasCalorico(
+        //        resDTO.getIngredientes().stream().max(IngredienteDTO::getCalorias);
+        //);
+        //resDTO.setTotalCalories(totalCals);
+
+        //return resDTO;
     }
 
 

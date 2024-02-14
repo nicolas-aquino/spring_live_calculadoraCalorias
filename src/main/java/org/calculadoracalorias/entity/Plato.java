@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import java.util.List;
 import java.util.Map;
 
 @AllArgsConstructor
@@ -16,4 +15,5 @@ import java.util.Map;
 public class Plato {
     String nombre;
     Double peso;
+    Map<String, Double> ingredientes;
 }

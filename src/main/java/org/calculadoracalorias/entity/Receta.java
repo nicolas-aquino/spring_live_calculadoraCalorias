@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import java.util.List;
+import java.util.Map;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,5 +14,11 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Receta {
     String nombre;
-    List<IngredienteDelPlato> ingredientes;
+    Map<String, Double> ingredientes; //TODO: Cambiar esto a List para poder deserializar
+
+    public Double calcularPeso() {
+        return ingredientes.values().stream()
+                .mapToDouble(d -> d)
+                .sum();
+    }
 }

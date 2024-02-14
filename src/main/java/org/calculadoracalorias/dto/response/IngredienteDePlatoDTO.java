@@ -1,4 +1,4 @@
-package org.calculadoracalorias.entity;
+package org.calculadoracalorias.dto.response;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,8 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class IngredienteDelPlato {
-    String nombre;
+public class IngredienteDePlatoDTO {
+    String ingrediente;
     Double peso;
+    Double calorias;
 }

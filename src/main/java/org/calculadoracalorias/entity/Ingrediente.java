@@ -12,6 +12,5 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Ingrediente {
     String name;
-    Double calories;
-
+    Double calories; //Calorias cada 100 gramos
 }

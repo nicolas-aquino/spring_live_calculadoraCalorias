@@ -7,18 +7,18 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.calculadoracalorias.entity.Ingrediente;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PlatoResponseDTO {
-    Double totalCalories;
-    Ingrediente ingredienteMasCalorico;
-    List<IngredienteResponseDTO> ingredientes;
+public class IngredienteDTO {
+    String nombreIngrediente;
+    Double caloriesPer100grams;
 
-    public PlatoResponseDTO() {
-        ingredientes = new ArrayList<>();
+    public IngredienteDTO(Ingrediente ingrediente) {
+        nombreIngrediente = ingrediente.getName();
+        caloriesPer100grams = ingrediente.getCalories();
     }
 }
